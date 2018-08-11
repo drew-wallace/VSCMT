@@ -1,0 +1,35 @@
+[
+  {
+    "id": "preferences",
+    "children": [
+      {
+        "caption": "Package Settings",
+        "mnemonic": "P",
+        "id": "package-settings",
+        "children": [
+          {
+            "caption": "VSCMT",
+            "children": [
+              {
+                "caption": "Settings",
+                "command": "edit_settings",
+                "args": {
+                  "base_file": "${packages}/VSCMT/VSCMT.sublime-settings",
+                  "default": "// Settings in here override those in \"VSCMT/VSCMT.sublime-settings\",\n\n{\n\t$0\n}\n"
+                }
+              },
+              {
+                "caption": "Key Bindings",
+                "command": "edit_settings",
+                "args": {
+                  "base_file": "${packages}/VSCMT/Keymaps/Default (${platform}).sublime-keymap",
+                  "user_file": "${packages}/User/Default (${platform}).sublime-keymap"
+                }
+              }
+            ]
+          }
+        ]
+      }
+    ]
+  }
+]

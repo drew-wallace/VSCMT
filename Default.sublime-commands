@@ -1,0 +1,17 @@
+[
+    {
+        "caption": "Preferences: VSCMY Settings",
+        "command": "edit_settings",
+        "args": {
+          "base_file": "${packages}/VSCMT/VSCMT.sublime-settings",
+          "default": "// Settings in here override those in \"VSCMT/VSCMT.sublime-settings\",\n\n{\n\t$0\n}\n"}
+    },
+    {
+        "caption": "VSCMT: Find Next Conflict",
+        "command": "find_next_conflict"
+    },
+    {
+        "caption": "VSCMT: Show Conflict Files",
+        "command": "list_conflict_files"
+    }
+]

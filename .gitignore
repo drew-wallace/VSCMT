@@ -1,0 +1,8 @@
+# Compiled python files (ST2)
+*.pyc
+
+# Sublime files
+*.sublime-workspace
+
+# Jetbrains
+.idea/
