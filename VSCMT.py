@@ -2,9 +2,21 @@ import sublime
 import sublime_plugin
 import os
 
+from .modules import conflict_re
 from .modules import git_mixin
 from .modules import messages as msgs
 from .modules import settings
+
+def find_conflict(view, begin=0):
+    conflict_region = view.find(conflict_re.NO_NAMING_GROUPS_PATTERN, begin)
+
+    if not conflict_region:
+        conflict_region = view.find(conflict_re.NO_NAMING_GROUPS_PATTERN, 0)
+        if not conflict_region:
+            sublime.status_message(msgs.get('no_conflict_found'))
+            return None
+
+    return conflict_region
 
 class FindNextConflict(sublime_plugin.TextCommand):
     def run(self, edit):
@@ -25,7 +37,7 @@ class FindNextConflict(sublime_plugin.TextCommand):
         # Add the region to the selection
         self.view.show_at_center(conflict_region)
         current_selection.clear()
-        current_selection.add(conflict_region)
+        current_selection.add(sublime.Region(conflict_region.a))
 
 
 class ListConflictFiles(sublime_plugin.WindowCommand, git_mixin.GitMixin):
@@ -105,20 +117,20 @@ class ListConflictFiles(sublime_plugin.WindowCommand, git_mixin.GitMixin):
 
 class ScanForConflicts(sublime_plugin.EventListener):
     def on_activated_async(self, view):
-        # if settings.get('live_matching'):
-        view.run_command('vscmt_highlight_conflicts')
+        if settings.get('live_matching'):
+            view.run_command('vscmt_highlight_conflicts')
 
     def on_load_async(self, view):
-        # if settings.get('live_matching'):
-        view.run_command('vscmt_highlight_conflicts')
+        if settings.get('live_matching'):
+            view.run_command('vscmt_highlight_conflicts')
 
     def on_pre_save_async(self, view):
-        # if settings.get('live_matching'):
-        view.run_command('vscmt_highlight_conflicts')
+        if settings.get('live_matching'):
+            view.run_command('vscmt_highlight_conflicts')
 
     def on_modified_async(self, view):
-        # if settings.get('live_matching'):
-        view.run_command('vscmt_highlight_conflicts')
+        if settings.get('live_matching'):
+            view.run_command('vscmt_highlight_conflicts')
 
 startHeaderMarker = '<<<<<<<';
 commonAncestorsMarker = '|||||||';
